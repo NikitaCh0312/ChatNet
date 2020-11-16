@@ -1,0 +1,42 @@
+
+
+<style>
+    .form-register {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+    }
+</style>
+<div class="container mt-5">
+    <form method="post" class="form-register">
+        <h1 class="h3 mb-3 font-weight-normal">Registration form</h1>
+
+        <label for="inputName" class="sr-only">Name</label>
+        <input type="text" name="name" id="inputName" class="form-control" placeholder="Name" required autofocus>
+
+        <label for="inputSurname" class="sr-only">Surname</label>
+        <input type="text" name="surname" id="inputSurname" class="form-control" placeholder="Surname" required>
+
+        <label for="inputIp" class="sr-only">Ip</label>
+        <input type="text" name="ip_address" id="inputIp" class="form-control" placeholder="ip address" required autofocus>
+
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+
+        <label for="inputLogin" class="sr-only">Login</label>
+        <input type="text" name="login" id="inputLogin" class="form-control" placeholder="Login" required autofocus>
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        
+        <label for="inputPasswordCopy" class="sr-only">PasswordCopy</label>
+        <input type="password" name="password_copy" id="inputPasswordCopy" class="form-control" placeholder="Repeat password" required>
+
+
+
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+
+    </form>
+</div>

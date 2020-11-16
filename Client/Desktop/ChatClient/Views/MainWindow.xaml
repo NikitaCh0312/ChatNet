@@ -1,0 +1,95 @@
+﻿<Window x:Class="ChatClient.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:conv="clr-namespace:ChatClient.Helpers"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="350" Width="625" >
+    <Window.Resources>
+        <conv:ListToStringConverter x:Key="ListToStringConverter" />
+    </Window.Resources>
+    <Grid>
+        <!--<ContentControl prism:RegionManager.RegionName="ContentRegion" />-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="3" Grid.Column="0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Connect" Margin="10,10,10,10"
+                Command="{Binding ConnectServer}"/>
+            <Button Grid.Column="1" Content="Disconnect" Margin="10,10,10,10"
+                Command="{Binding ConnectServer}"/>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                 Content="Login"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Margin="10,0,10,10"
+                 Text="{Binding Login}"/>
+            
+            <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                 Content="Ip Address"/>
+            <TextBox Grid.Row="3" Grid.Column="0" Margin="10,0,10,10"
+                 Text="{Binding Ip}"/>
+            
+            <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                 Content="Port"/>
+            <TextBox Grid.Row="5" Grid.Column="0" Margin="10,0,10,10"
+                 Text="{Binding Port}"/>
+        </Grid>
+
+        <ScrollViewer x:Name="ChatScrollViewer" Grid.Row="0" Grid.RowSpan="3"  Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBox Margin="10,10,10,10"
+                 Text="{Binding Chat, Converter={StaticResource ListToStringConverter}}">
+            </TextBox>
+        </ScrollViewer>
+        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.4*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Content="Enter reciever login" HorizontalAlignment="Right" VerticalAlignment="Center"
+                   VerticalContentAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="0"
+                     Text="{Binding ReceiverLogin}"/>
+            <CheckBox Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"
+                      IsChecked="{Binding isBroadcastMessage}"/>
+
+            <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Margin="10,10,10,10" Background="DarkGray" Foreground="White"
+                     Text="{Binding Message}"/>
+            <Button Grid.Column="2" Grid.Row="1" Content="Send" Margin="10,10,10,10"
+                    Command="{Binding SendMessage}"/>
+        </Grid>
+
+        <Label Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+               Content="Available Clients"/>
+        <ListView Grid.Row="1" Grid.RowSpan="4" Grid.Column="4" Margin="10,10,10,10"
+                  ItemsSource="{Binding AvailableClients}"/>
+    </Grid>
+</Window>

@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="ServerMainWindow.Views.MainWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ServerMainWindow.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             xmlns:conv="clr-namespace:ServerMainWindow.Helpers"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <conv:ListToStringConverter x:Key="ListToStringConverter" />
+    </UserControl.Resources>
+    <Grid IsEnabled="{Binding isServerEnabled}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" >
+            <!--<TextBlock  Margin="10,10,10,10" Foreground="White" FontSize="14"
+                Background="#FF3C72BF"
+                Text="{Binding LogMessages, Converter={StaticResource ListToStringConverter}}"/>-->
+            <ListView Foreground="White" Background="#FF3C72BF" ItemsSource="{Binding LogMessages}"/>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Grid.Column="0">
+            <RadioButton GroupName="SenderTypeGroup" Content="Отправить всем" Foreground="LightGray" FontSize="14" IsChecked="{Binding isBroadcastMessage}"/>
+            <RadioButton GroupName="SenderTypeGroup" Content="Отправить выбранному клиенту" Foreground="LightGray" FontSize="14" IsChecked="{Binding isToClientMessage}"/>
+            <Border Background="#FF26326A" CornerRadius="20">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Логин выбранного клиента:" Foreground="LightGray" FontSize="16" HorizontalAlignment="Center"/>
+                    <Label HorizontalAlignment="Center" Foreground="White" FontSize="18" Content="{Binding SelectedClient.Login}"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <Border Grid.Row="3" Grid.Column="0" Background="#FF203C53" CornerRadius="15">
+        </Border>
+        <Grid Grid.Row="3" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Margin="10,10,10,10" Foreground="White" Background="{x:Null}" FontSize="18" TextWrapping="Wrap"
+                     materialDesign:HintAssist.Hint="Сообщение" Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                     Text="{Binding Message}"/>
+            <Button Grid.Column="1" Margin="10,10,10,10" Height="Auto"
+                    Command="{Binding SendMessageCommand}">
+                <materialDesign:PackIcon Kind="Send" Height="50" Width="50"/>
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="ПОДКЛЮЧЕННЫЕ КЛИЕНТЫ:" FontFamily="Champagne &amp; Limousines" Foreground="White" HorizontalAlignment="Center"/>
+            <ListView Grid.Row="1" Margin="10,10,10,10" Foreground="White" ItemsSource="{Binding clientsListView}" SelectedItem="{Binding SelectedClient}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding Login}" Foreground="White" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+
+        <Button Grid.Row="3" Grid.Column="1" Margin="10,10,10,10" Height="Auto"
+            Command="{Binding DisconnectClient}" Cursor="Hand">
+            <StackPanel>
+                <Label Content="Отключить" HorizontalAlignment="Center" Height="Auto" Foreground="White"/>
+                <Label Content="выбранного" HorizontalAlignment="Center" Height="Auto" Foreground="White"/>
+                <Label Content="клиента" HorizontalAlignment="Center" Height="Auto" Foreground="White"/>
+            </StackPanel>
+        </Button>
+    </Grid>
+</UserControl>
